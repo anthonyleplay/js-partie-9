@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <title>JS partie 9 exo 1</title>
+
+</head>
+
+
+<body class="bg-dark">
+    <div class="container bg-dark py-2">
+        <div class="row bg-light py-5 justify-content-center">
+            <div class="col-10">
+
+                <p class="h2"> Partie 9 - Les librairies</p>
+
+                <p class="h4"> Exercice 1</p>
+                <p>A l'aide de la librairie cleave.js, créer un formulaire de paiement. Ajouter un champ nom et un champ
+                    prénom, un champ numéro de téléphone, un champ date de commande et un champ carte bancaire.
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container bg-dark py-2">
+        <div class="row bg-light py-5 justify-content-center">
+            <div class="col-10">
+
+                <form action="">
+                    <div class="border m-2 p-2">
+                        <label for="lastname">Votre Nom:</label><br>
+                        <input class="p-2" type="text" id="lastname" name="lastname" placeholder="Dupont"
+                            onkeyup=valideLastname()><span id="errorLastname"></span>
+                    </div>
+                    <div class="border m-2 p-2">
+                        <label for="firstname">Votre Prénom:</label><br>
+                        <input class="p-2" type="text" id="firstname" name="firstname" placeholder="Jean"
+                            onkeyup=valideFirstname()><span id="errorFirstname"></span>
+                    </div>
+                    <div class="border m-2 p-2">
+                        <label for="telnumber">Numéro de Téléphone:</label><br>
+                        <input class="p-2 phoneNumber" type="text" name="telnumber"placeholder="01 23 45 67 89">
+                    </div>
+                    <div class="border m-2 p-2">
+                        <label for="datecmd">Date de Commande:</label><br>
+                        <input class="p-2 datecmd" type="text" name="datecmd" placeholder="dd-mm-YYYY">
+                    </div>
+                    <div class="border m-2 p-2">
+                        <label for="cardnumber">Carte Bancaire:</label><span class="cardtype">(unknown)</span><br>
+                        <input class="p-2 cardnumber" type="text" name="cardnumber">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="cleave.js"></script>
+    <script src="phone-type-formatter.fr.js"></script>
+    <script>
+        function valideLastname() {
+            let idLastname = document.getElementById("lastname");
+            let regexname = /^[a-zA-Zçéè" "\-]+$/;
+            let iderror = document.getElementById("errorLastname");
+
+            if (regexname.test(idLastname.value) == true) {
+                idLastname.style.borderColor = "green";
+                iderror.textContent = " ";
+            } else {
+                idLastname.style.borderColor = "red";
+                iderror.textContent = " error!";
+                iderror.style.color = "red";
+            }
+        }
+
+        function valideFirstname() {
+            let idFirstname = document.getElementById("firstname");
+            let regexname = /^[a-zA-Zçéè" "\-]+$/;
+            let iderror = document.getElementById("errorFirstname");
+
+            if (regexname.test(idFirstname.value) == true) {
+                idFirstname.style.borderColor = "green";
+                iderror.textContent = " ";
+            } else {
+                idFirstname.style.borderColor = "red";
+                iderror.textContent = " error!";
+                iderror.style.color = "red";
+            }
+        }
+
+
+        var phoneCleave = new Cleave('.phoneNumber', {
+            phone: true,
+            phoneRegionCode: 'fr'
+        });
+
+
+        var dateCleave = new Cleave('.datecmd', {
+            date: true,
+            delimiter: '-',
+            datePattern: ['d', 'm', 'Y']
+        });
+
+
+        var cardCleave = new Cleave('.cardnumber', {
+            creditCard: true,
+            onCreditCardTypeChanged: function (type) {
+                document.querySelector('.cardtype').innerHTML = "(" + type + ")";
+            }
+        });
+    </script>
+
+
+
+</body>
+
+</html>
